@@ -2,10 +2,11 @@ import logo from './logo.svg';
 import {Main} from './templates/Main'
 import {useState, useEffect} from 'react'
 import {ChevronRightIcon, ChevronDoubleRightIcon, RefreshIcon } from '@heroicons/react/outline'
+import Table from './components/Table'
 import './App.css';
 
-const FAKE_JSON_WORDS = [{"index":0,"word":"饮料"},{"index":1,"word":"厕所"},{"index":2,"word":"分钟"},{"index":3,"word":"画家"},{"index":4,"word":"上午"},{"index":5,"word":"有用"},{"index":6,"word":"中国"},{"index":7,"word":"以后"},{"index":8,"word":"回家"},{"index":9,"word":"睡觉"},{"index":10,"word":"饺子"},{"index":11,"word":"菜单"},{"index":12,"word":"大学"},{"index":13,"word":"工作"},{"index":14,"word":"对面"},{"index":15,"word":"玩儿"},{"index":16,"word":"学生"},{"index":17,"word":"总是"},{"index":18,"word":"国家"},{"index":19,"word":"多少"},{"index":20,"word":"城市"},{"index":21,"word":"号码"},{"index":22,"word":"小心"},{"index":23,"word":"回来"},{"index":24,"word":"一起"},{"index":25,"word":"不客气"},{"index":26,"word":"为什么"},{"index":27,"word":"里面"},{"index":28,"word":"开心"},{"index":29,"word":"点儿"},{"index":30,"word":"离开"},{"index":31,"word":"安全"},{"index":32,"word":"中间"},{"index":33,"word":"虽然"},{"index":34,"word":"客气"},{"index":35,"word":"好像"},{"index":36,"word":"汉字"},{"index":37,"word":"您好"},{"index":38,"word":"不好意思"},{"index":39,"word":"下去"},{"index":40,"word":"书店"},{"index":41,"word":"上来"},{"index":42,"word":"身体"},{"index":43,"word":"饭店"},{"index":44,"word":"不一定"},{"index":45,"word":"门口"},{"index":46,"word":"开学"},{"index":47,"word":"然后"},{"index":48,"word":"老人"},{"index":49,"word":"上面"},{"index":50,"word":"中文"},{"index":51,"word":"所以"},{"index":52,"word":"爸爸"},{"index":53,"word":"这么"},{"index":54,"word":"还是"},{"index":55,"word":"原来"},{"index":56,"word":"小学"},{"index":57,"word":"照片"},{"index":58,"word":"马上"},{"index":59,"word":"这里"},{"index":60,"word":"自己"},{"index":61,"word":"一定"},{"index":62,"word":"中午"},{"index":63,"word":"常常"},{"index":64,"word":"楼梯"},{"index":65,"word":"没有"},{"index":66,"word":"忘记了"},{"index":67,"word":"慢慢"},{"index":68,"word":"客人"},{"index":69,"word":"动物"},{"index":70,"word":"学习"},{"index":71,"word":"没问题"},{"index":72,"word":"市场"},{"index":73,"word":"点菜"},{"index":74,"word":"上学"},{"index":75,"word":"放下"},{"index":76,"word":"医院"},{"index":77,"word":"早上"},{"index":78,"word":"办公室"},{"index":79,"word":"大家"},{"index":80,"word":"什么"},{"index":81,"word":"那么"},{"index":82,"word":"奶奶"},{"index":83,"word":"图片"},{"index":84,"word":"出国"},{"index":85,"word":"男孩儿"},{"index":86,"word":"点心"}]
-const FAKE_WORDS = ['饮料',
+const FAKE_WORDS = [
+'饮料',
 '厕所',
 '分钟',
 '画家',
@@ -93,23 +94,54 @@ const FAKE_WORDS = ['饮料',
 '男孩儿',
 '点心'];
 
+function shuffle(array) {
+  let currentIndex = array.length,  randomIndex;
+
+  // While there remain elements to shuffle.
+  while (currentIndex != 0) {
+
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
+}
+
+
 const STATUS = {
   CORRECT: 'CORRECT',
   WRONG: 'WRONG'
 }
 
+const getTime = () => {
+  const date = new Date();
+  const result = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`
+  return result;
+}
+
 function App() {
 
   const [lstWords, setListWord] = useState([]);
+  const [countKeyDown, setCountKeyDown] = useState(0);
   const [inputValue, setInputValue] = useState('');
   const [currentId, setCurrentWordId] = useState(0);
   const [currentStatus, setCurrentWordStatus] = useState(true);
   const [counter, setCounter] = useState(60);
   const [startCounter, setStartCounter] = useState(false);
+  const [endGame, setEndGame] = useState(false);
+  const [testInfo, setTestInfo] = useState({});
+  const [rowShow, setRowShow] = useState(0);
+  const [typeTest, setTypeTest] = useState(0);
   
   useEffect(() => {
-    const lst = FAKE_WORDS.map( (item,index) => ({id: index, word: item, status: null}))
-    setListWord(lst)
+    const shuffleArr = shuffle(FAKE_WORDS);
+    const lst = shuffleArr.map( (item,index) => ({id: index, word: item, status: null}))
+    setListWord(lst);
   }, [])
 
   const renderStyle = ({item, currentWordId, currentStatus}) => {
@@ -160,6 +192,16 @@ function App() {
       setCurrentWordId(wordObj.id + 1);
       setCurrentWordStatus(true);
       setInputValue('')
+
+      const textedListLength = lstNew.filter(item => item.status).length;
+      if(textedListLength % 10 === 0) {
+        setRowShow(textedListLength / 10);
+      }
+
+      if(textedListLength === FAKE_WORDS.length) {
+        setCounter(0)
+      }
+
     } else {
       value.split('').forEach((word, index) => {
         if(word.localeCompare(currentWord[index]) !== 0){
@@ -167,6 +209,7 @@ function App() {
         }
       });
       setCurrentWordStatus(status)
+      setCountKeyDown(countKeyDown+1)
     }  
   }
 
@@ -178,24 +221,53 @@ function App() {
 
   useEffect(() => {
     if(startCounter){
+      if (counter === 0) {
+        setEndGame(true)
+      }
       const timer =
       counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
       return () => clearInterval(timer);
+     
     }
   }, [counter, startCounter]);
 
+  useEffect(() => {
+    if(endGame) {
+      alert('time out!!!!')
+      setInputValue('')
+      const lstTested = lstWords.filter( item => item.status);
+      const lstCorrect = lstTested.filter( item => item.status === STATUS.CORRECT);
+      const info = {
+        correct: lstCorrect.length,
+        incorrect: lstTested.length - lstCorrect.length,
+        accuracy: (lstCorrect.length / (lstTested.length) * 100).toFixed(2),
+        keystrokes: countKeyDown,
+        wpm: countKeyDown/5
+      }
+      setTestInfo(info)
+
+      const records = sessionStorage.getItem("records")
+      const parse = records ? JSON.parse(records) : []
+      parse.push({wpm: info.wpm, correct: info.correct, incorrect: info.incorrect, time: getTime(), id: parse.length + 1})
+      sessionStorage.setItem("records", JSON.stringify(parse));
+    }
+  }, [endGame, lstWords]);
+
+  const refresh = () => window.location.reload();
+  
+
   return (
     <Main>
-      <div className='flex flex-row gap-9'>
-        <div className='flex flex-col bg-white w-[250px]'>
-          <div className='flex flex-row p-4 border-b items-start gap-4'>
+      <div className='w-full grid grid-cols-12 gap-4'>
+        <div className='flex flex-col bg-white col-span-2'>
+          <div className={`flex flex-row p-4 border-b items-start gap-4 cursor-pointer ${typeTest === 0 ? 'bg-cyan-600 text-white' : ''}`} onClick={() => setTypeTest(0)}>
             <ChevronRightIcon width={22} height={22}/>
             <div>
               <p><strong>打字速度测试</strong></p>
               <small>常用200字</small>
             </div>
           </div>
-          <div className='flex flex-row p-4 border-b items-start gap-4'>
+          <div className={`flex flex-row p-4 border-b items-start gap-4 cursor-pointer ${typeTest === 1 ? 'bg-cyan-600 text-white' : ''}`} onClick={() => setTypeTest(1)}>
             <ChevronDoubleRightIcon width={22} height={22}/>
             <div>
               <p><strong>打字速度测试（高级）</strong></p>
@@ -203,22 +275,52 @@ function App() {
             </div>
           </div>
         </div>
-        <div className='flex flex-col max-w-4xl justify-center '>
-          <div className='flex gap-2 bg-slate-200 text-6xl overflow-hidden wrap-display-text'>
-            {lstWords.map( (item, index) =>  <span key={item.id} id={item.id} className={renderStyle({item, currentWordId: currentId, currentStatus})}>{item.word}</span> )}
+        <div className='flex flex-col justify-center  col-span-7'>
+          <div className='relative gap-2 bg-slate-200 text-6xl overflow-hidden wrap-display-text'>
+            <div className='absolute' style={{top: rowShow * -55}}>
+              {lstWords.map( (item) => {
+                return <span key={item.id} id={item.id} className={renderStyle({item, currentWordId: currentId, currentStatus})}>{item.word} {(item.id + 1) % 10 === 0 && <br/>}</span>
+                } 
+              )}
+            </div>
           </div>
-          <div className='flex justify-center items-center gap-4'>
-            <input className="input-text w-52" type="text" value={inputValue} onChange={onChangeInput} onKeyUp={onKeyDown} />
+          <div className='flex justify-center items-center gap-4 mb-12'>
+            <input className="input-text w-52" type="text" disabled={endGame} value={inputValue} onChange={onChangeInput} onKeyUp={onKeyDown} autoComplete="off" />
             <div className='p-3 rounded-md text-white text-2xl bg-slate-500 countdown'>0:{counter < 10 ? `0${counter}` : counter}</div>
-            <div className='p-3 rounded-md text-white text-2xl bg-slate-500 refresh cursor-pointer'>
+            <div className='p-3 rounded-md text-white text-2xl bg-slate-500 refresh cursor-pointer' onClick={refresh}>
               <RefreshIcon width={32} height={32}/>
             </div>
           </div>
+
         </div>
-        <div className='flex'>
-          <div>Result</div>
+        <div className='flex  col-span-3 justify-center '>
+          <div className='w-full bg-white'>
+            <div className='text-center text-xl p-2 bg-emerald-400 text-white result-text'>Result</div>
+            <div className='text-center py-4 border-b'>
+              <p className='text-4xl font-bold'>{testInfo.wpm ? testInfo.wpm.toFixed(0) : 0} WPM</p>
+              <span>(words per minute)</span>
+            </div>
+            <div className='p-4 flex justify-between text-xl border-b '>
+              <strong className=''>Keystrokes</strong>
+              <span>{testInfo.keystrokes || 0}</span>
+            </div>
+            <div className='p-4 flex justify-between text-xl border-b '>
+              <strong className=''>Accuracy</strong>
+              <strong>{testInfo.accuracy || 0}%</strong>
+            </div>
+            <div className='p-4 flex justify-between text-xl border-b '>
+              <strong className=''>Correct words</strong>
+              <strong className='text-emerald-600'>{testInfo.correct || 0}</strong>
+            </div>
+            <div className='p-4 flex justify-between text-xl border-b '>
+              <strong className=''>Wrong words</strong>
+              <strong className='text-rose-700'>{testInfo.incorrect || 0}</strong>
+            </div>
+          </div>
         </div>
       </div>
+      <Table />
+
     </Main>
   );
 }

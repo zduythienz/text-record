@@ -2,7 +2,7 @@
   padding: 6px 12px 30px 12px;
     margin-top: 0px;
     margin-bottom: 10px;
-    height: 140px;
+    height: 125px;
     overflow: hidden;
     color: #1d4851;
     font-family: Times New Roman, Times, serif;
@@ -20,6 +20,10 @@
     -ms-user-select: none;
     user-select: none;
     flex-flow: wrap;
+}
+
+.wrap-display-text span {
+  margin-right: 8px
 }
 
 .input-text{
