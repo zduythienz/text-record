@@ -572,7 +572,7 @@ function App() {
             <div className="relative gap-2 bg-slate-200 text-6xl overflow-hidden wrap-display-text">
               <div
                 className="absolute"
-                style={{ top: rowShow * -55, width: "102%" }}
+                style={{ top: rowShow * -67, width: "102%" }}
               >
                 {lstWords.map((item) => {
                   return (
