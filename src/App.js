@@ -131,7 +131,7 @@ function App() {
   const [inputValue, setInputValue] = useState('');
   const [currentId, setCurrentWordId] = useState(0);
   const [currentStatus, setCurrentWordStatus] = useState(true);
-  const [counter, setCounter] = useState(2);
+  const [counter, setCounter] = useState(60);
   const [startCounter, setStartCounter] = useState(false);
   const [endGame, setEndGame] = useState(false);
   const [testInfo, setTestInfo] = useState({});
@@ -265,49 +265,49 @@ function App() {
             <div className={`flex flex-row p-4 border-b items-start gap-4 rounded-t-lg cursor-pointer ${typeTest === 0 ? 'bg-selected text-white' : ''}`} onClick={() => setTypeTest(0)}>
               <ChevronRightIcon width={18} height={18}/>
               <div>
-                <p><strong>打字速度测试</strong></p>
+                <p><p className="font-medium text-sm">打字速度测试</p></p>
                 <small>常用200字</small>
               </div>
             </div>
             <div className={`flex flex-row p-4 border-b items-start gap-4 cursor-pointer ${typeTest === 1 ? 'bg-selected text-white' : ''}`} onClick={() => setTypeTest(1)}>
               <ChevronDoubleRightIcon width={18} height={18}/>
               <div>
-                <p><strong>打字速度测试（高级）</strong></p>
+                <p><p className="font-medium text-sm">打字速度测试（高级）</p></p>
                 <small>常用1000字</small>
               </div>
             </div>
             <div className={`flex flex-row p-4 border-b items-start gap-4 cursor-pointer`}>
               <CogIcon width={18} height={18}/>
               <div>
-                <p><strong>Custom Typing Test</strong></p>
+                <p><p className="font-medium text-sm">Custom Typing Test</p></p>
                 <small>Create your own!</small>
               </div>
             </div>
             <div className={`flex flex-row p-4 border-b items-start gap-4 cursor-pointer`}>
               <UsersIcon width={18} height={18}/>
               <div>
-                <p><strong>Multiplayer Typing Test</strong></p>
+                <p><p className="font-medium text-sm">Multiplayer Typing Test</p></p>
                 <small>Multiplayer Typing Test</small>
               </div>
             </div>
             <div className={`flex flex-row p-4 border-b items-start gap-4 cursor-pointer`}>
               <UploadIcon width={18} height={18}/>
               <div>
-                <p><strong>打字竞赛</strong></p>
+                <p><p className="font-medium text-sm">打字竞赛</p></p>
                 <small>谁是快速打字记录者?</small>
               </div>
             </div>
             <div className={`flex flex-row p-4 border-b items-start gap-4 cursor-pointer`}>
               <DocumentTextIcon width={18} height={18}/>
               <div>
-                <p><strong>练习文章</strong></p>
+                <p><p className="font-medium text-sm">练习文章</p></p>
                 <small>練習你自己的文章</small>
               </div>
             </div>
             <div className={`flex flex-row p-4 border-b items-start gap-4 cursor-pointer`}>
               <ChartBarIcon width={18} height={18}/>
               <div>
-                <p><strong>常用 1000</strong></p>
+                <p><p className="font-medium text-sm">常用 1000</p></p>
                 <small>解开选定语言的常用1000字</small>
               </div>
             </div>
