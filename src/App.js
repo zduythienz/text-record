@@ -6,6 +6,7 @@ import Table from './components/Table'
 import btn1 from './btn-1.png';
 import btn2 from './btn-3.png';
 import tablepng from './table.png'
+import share from './share.png'
 import './App.css';
 
 const FAKE_WORDS = [
@@ -408,7 +409,9 @@ function App() {
             </div>
           </div>
         </div>}
+        <img src={share} alt="share" className='flex my-6' />
         <div className='flex relative'>
+          
           <img src={tablepng} alt="tabble" className='flex' />
         </div>
           {/* <Table /> */}
