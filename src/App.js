@@ -149,7 +149,7 @@ function App() {
   const [inputValue, setInputValue] = useState("");
   const [currentId, setCurrentWordId] = useState(0);
   const [currentStatus, setCurrentWordStatus] = useState(true);
-  const [counter, setCounter] = useState(10);
+  const [counter, setCounter] = useState(60);
   const [startCounter, setStartCounter] = useState(false);
   const [endGame, setEndGame] = useState(false);
   const [testInfo, setTestInfo] = useState({});
@@ -602,7 +602,7 @@ function App() {
                 autoComplete="off"
               />
               <div className="p-3 rounded-md text-white text-2xl bg-[#3c4d5c] countdown">
-                {counter === 10
+                {counter === 60
                   ? "1:00"
                   : `0:${counter < 10 ? `0${counter}` : counter}`}{" "}
               </div>
