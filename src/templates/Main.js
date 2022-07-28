@@ -4,9 +4,9 @@ import Navbar from '../components/Navbar';
 
 
 const Main = (props) => (
-  <div className="relative">
+  <div className="relative ">
     <Navbar />
-    <div className="w-full bg-slate-200 md:bg-slate-50 px-0 md:px-1 antialiased">
+    <div className="w-full px-0 md:px-1 antialiased bg-body">
 
       <div className="mx-auto">
         <div className="py-5">{props.children}</div>

@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import {Main} from './templates/Main'
 import {useState, useEffect} from 'react'
-import {ChevronRightIcon, ChevronDoubleRightIcon, RefreshIcon } from '@heroicons/react/outline'
+import {ChevronRightIcon, ChevronDoubleRightIcon, RefreshIcon, CogIcon, UsersIcon, DocumentTextIcon, ChartBarIcon, UploadIcon } from '@heroicons/react/outline'
 import Table from './components/Table'
 import './App.css';
 
@@ -131,7 +131,7 @@ function App() {
   const [inputValue, setInputValue] = useState('');
   const [currentId, setCurrentWordId] = useState(0);
   const [currentStatus, setCurrentWordStatus] = useState(true);
-  const [counter, setCounter] = useState(60);
+  const [counter, setCounter] = useState(2);
   const [startCounter, setStartCounter] = useState(false);
   const [endGame, setEndGame] = useState(false);
   const [testInfo, setTestInfo] = useState({});
@@ -223,6 +223,8 @@ function App() {
     if(startCounter){
       if (counter === 0) {
         setEndGame(true)
+        setListWord([])
+
       }
       const timer =
       counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
@@ -232,7 +234,7 @@ function App() {
   }, [counter, startCounter]);
 
   useEffect(() => {
-    if(endGame) {
+    if(endGame && lstWords.length === 0) {
       alert('time out!!!!')
       setInputValue('')
       const lstTested = lstWords.filter( item => item.status);
@@ -245,7 +247,6 @@ function App() {
         wpm: countKeyDown/5
       }
       setTestInfo(info)
-
       const records = sessionStorage.getItem("records")
       const parse = records ? JSON.parse(records) : []
       parse.push({wpm: info.wpm, correct: info.correct, incorrect: info.incorrect, time: getTime(), id: parse.length + 1})
@@ -259,19 +260,56 @@ function App() {
   return (
     <Main>
       <div className='w-full grid grid-cols-12 gap-4'>
-        <div className='flex flex-col bg-white col-span-2'>
-          <div className={`flex flex-row p-4 border-b items-start gap-4 cursor-pointer ${typeTest === 0 ? 'bg-cyan-600 text-white' : ''}`} onClick={() => setTypeTest(0)}>
-            <ChevronRightIcon width={22} height={22}/>
-            <div>
-              <p><strong>打字速度测试</strong></p>
-              <small>常用200字</small>
+        <div className='w-full col-span-2 '>
+          <div className='flex flex-col bg-white rounded-lg'>
+            <div className={`flex flex-row p-4 border-b items-start gap-4 rounded-t-lg cursor-pointer ${typeTest === 0 ? 'bg-selected text-white' : ''}`} onClick={() => setTypeTest(0)}>
+              <ChevronRightIcon width={18} height={18}/>
+              <div>
+                <p><strong>打字速度测试</strong></p>
+                <small>常用200字</small>
+              </div>
             </div>
-          </div>
-          <div className={`flex flex-row p-4 border-b items-start gap-4 cursor-pointer ${typeTest === 1 ? 'bg-cyan-600 text-white' : ''}`} onClick={() => setTypeTest(1)}>
-            <ChevronDoubleRightIcon width={22} height={22}/>
-            <div>
-              <p><strong>打字速度测试（高级）</strong></p>
-              <small>常用1000字</small>
+            <div className={`flex flex-row p-4 border-b items-start gap-4 cursor-pointer ${typeTest === 1 ? 'bg-selected text-white' : ''}`} onClick={() => setTypeTest(1)}>
+              <ChevronDoubleRightIcon width={18} height={18}/>
+              <div>
+                <p><strong>打字速度测试（高级）</strong></p>
+                <small>常用1000字</small>
+              </div>
+            </div>
+            <div className={`flex flex-row p-4 border-b items-start gap-4 cursor-pointer`}>
+              <CogIcon width={18} height={18}/>
+              <div>
+                <p><strong>Custom Typing Test</strong></p>
+                <small>Create your own!</small>
+              </div>
+            </div>
+            <div className={`flex flex-row p-4 border-b items-start gap-4 cursor-pointer`}>
+              <UsersIcon width={18} height={18}/>
+              <div>
+                <p><strong>Multiplayer Typing Test</strong></p>
+                <small>Multiplayer Typing Test</small>
+              </div>
+            </div>
+            <div className={`flex flex-row p-4 border-b items-start gap-4 cursor-pointer`}>
+              <UploadIcon width={18} height={18}/>
+              <div>
+                <p><strong>打字竞赛</strong></p>
+                <small>谁是快速打字记录者?</small>
+              </div>
+            </div>
+            <div className={`flex flex-row p-4 border-b items-start gap-4 cursor-pointer`}>
+              <DocumentTextIcon width={18} height={18}/>
+              <div>
+                <p><strong>练习文章</strong></p>
+                <small>練習你自己的文章</small>
+              </div>
+            </div>
+            <div className={`flex flex-row p-4 border-b items-start gap-4 cursor-pointer`}>
+              <ChartBarIcon width={18} height={18}/>
+              <div>
+                <p><strong>常用 1000</strong></p>
+                <small>解开选定语言的常用1000字</small>
+              </div>
             </div>
           </div>
         </div>
@@ -284,42 +322,46 @@ function App() {
               )}
             </div>
           </div>
-          <div className='flex justify-center items-center gap-4 mb-12'>
-            <input className="input-text w-52" type="text" disabled={endGame} value={inputValue} onChange={onChangeInput} onKeyUp={onKeyDown} autoComplete="off" />
+          <div className='flex justify-center items-center gap-4 mb-12 bg-[#A7C8E7] rounded'>
+            <input className="input-text w-52" type="text" readOnly={endGame} value={inputValue} onChange={onChangeInput} onKeyUp={onKeyDown} autoComplete="off" />
             <div className='p-3 rounded-md text-white text-2xl bg-slate-500 countdown'>0:{counter < 10 ? `0${counter}` : counter}</div>
             <div className='p-3 rounded-md text-white text-2xl bg-slate-500 refresh cursor-pointer' onClick={refresh}>
               <RefreshIcon width={32} height={32}/>
             </div>
-          </div>
 
-        </div>
-        <div className='flex  col-span-3 justify-center '>
-          <div className='w-full bg-white'>
-            <div className='text-center text-xl p-2 bg-emerald-400 text-white result-text'>Result</div>
+          </div>
+          {testInfo?.wpm && 
+        <div className='flex col-span-3 justify-center w-[300px] '>
+          <div className='w-full bg-white rounded-lg'>
+            <div className='text-center text-xl p-2 bg-result-title text-white result-text rounded-t-lg'>Result</div>
             <div className='text-center py-4 border-b'>
-              <p className='text-4xl font-bold'>{testInfo.wpm ? testInfo.wpm.toFixed(0) : 0} WPM</p>
+              <p className='text-4xl text-[#527a1e] font-bold'>{testInfo.wpm ? testInfo.wpm.toFixed(0) : 0} WPM</p>
               <span>(words per minute)</span>
             </div>
             <div className='p-4 flex justify-between text-xl border-b '>
-              <strong className=''>Keystrokes</strong>
+              <p className=''>Keystrokes</p>
               <span>{testInfo.keystrokes || 0}</span>
             </div>
             <div className='p-4 flex justify-between text-xl border-b '>
-              <strong className=''>Accuracy</strong>
+              <p className=''>Accuracy</p>
               <strong>{testInfo.accuracy || 0}%</strong>
             </div>
             <div className='p-4 flex justify-between text-xl border-b '>
-              <strong className=''>Correct words</strong>
+              <p className=''>Correct words</p>
               <strong className='text-emerald-600'>{testInfo.correct || 0}</strong>
             </div>
             <div className='p-4 flex justify-between text-xl border-b '>
-              <strong className=''>Wrong words</strong>
+              <p className=''>Wrong words</p>
               <strong className='text-rose-700'>{testInfo.incorrect || 0}</strong>
             </div>
           </div>
+        </div>}
+        <Table />
+
         </div>
+        
       </div>
-      <Table />
+      
 
     </Main>
   );

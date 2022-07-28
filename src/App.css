@@ -57,3 +57,19 @@
 .countdown{
   width: 75px
 }
+
+
+.nav-header{
+  border-top: 1px solid #444;
+    background: url(https://img.10fastfingers.com/img/layout-responsive/top-nav-bg.png) 0px 2px repeat-x #2e353d;
+    -webkit-box-shadow: 0px 3px 1px 1px rgb(0 0 0 / 20%);
+    box-shadow: 0px 2px 1px 1px rgb(0 0 0 / 20%);
+}
+
+.bg-selected {
+  background-color: #428bca
+}
+
+.bg-result-title {
+  background-color: #4d7f9f;
+}
