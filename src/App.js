@@ -259,8 +259,9 @@ function App() {
 
   return (
     <Main>
-      <div className='w-full grid grid-cols-12 gap-4'>
-        <div className='w-full col-span-2 '>
+      <div className=' w-11/12 m-auto  bg-body p-2 rounded-lg h-screen'>
+      <div className='w-full  grid grid-cols-12'>
+        <div className='w-full col-span-2 max-w-[250px]'>
           <div className='flex flex-col bg-white rounded-lg'>
             <div className={`flex flex-row p-4 border-b items-start gap-4 rounded-t-lg cursor-pointer ${typeTest === 0 ? 'bg-selected text-white' : ''}`} onClick={() => setTypeTest(0)}>
               <ChevronRightIcon width={18} height={18}/>
@@ -313,7 +314,7 @@ function App() {
             </div>
           </div>
         </div>
-        <div className='flex flex-col justify-center  col-span-7'>
+        <div className='flex flex-col justify-start  col-span-9'>
           <div className='relative gap-2 bg-slate-200 text-6xl overflow-hidden wrap-display-text'>
             <div className='absolute' style={{top: rowShow * -55}}>
               {lstWords.map( (item) => {
@@ -359,10 +360,10 @@ function App() {
         <Table />
 
         </div>
-        
+        <div className='col-span-1'></div>
       </div>
       
-
+      </div>
     </Main>
   );
 }
