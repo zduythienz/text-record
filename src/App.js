@@ -1,8 +1,11 @@
 import logo from './logo.svg';
 import {Main} from './templates/Main'
 import {useState, useEffect} from 'react'
-import {ChevronRightIcon, ChevronDoubleRightIcon, RefreshIcon, CogIcon, UsersIcon, DocumentTextIcon, ChartBarIcon, UploadIcon, ChevronDownIcon } from '@heroicons/react/outline'
+import {ChevronRightIcon, ChevronDoubleRightIcon, RefreshIcon, CogIcon, UsersIcon, DocumentTextIcon, ChartBarIcon, UploadIcon, ChevronDownIcon, LogoutIcon } from '@heroicons/react/outline'
 import Table from './components/Table'
+import btn1 from './btn-1.png';
+import btn2 from './btn-3.png';
+import tablepng from './table.png'
 import './App.css';
 
 const FAKE_WORDS = [
@@ -259,7 +262,7 @@ function App() {
 
   return (
     <Main>
-      <div className=' w-11/12 m-auto  bg-body p-2 rounded-lg h-screen'>
+      <div className=' w-11/12 m-auto  bg-body p-2 rounded-lg h-full'>
       <div className='w-full  grid grid-cols-12'>
         <div className='w-full col-span-2 max-w-[250px]'>
           <div className='flex flex-col bg-white rounded-lg'>
@@ -313,6 +316,7 @@ function App() {
               </div>
             </div>
           </div>
+          <div className='btn-login flex items-center'> <LogoutIcon className='mr-3.5' width={18}/>  登录</div>
           <div className='flex flex-col bg-white rounded-lg mt-4'>
             <div className={`flex flex-row p-2 border-b items-start gap-4 rounded-t-lg cursor-pointer`}>
               <img src="https://graph.facebook.com/115700377854960/picture?type=square" alt="" class="pull-left rounded-lg" />
@@ -370,33 +374,44 @@ function App() {
             </div>
 
           </div>
-          {testInfo?.wpm && 
+          {testInfo && 
         <div className='flex col-span-3 justify-center w-[300px] '>
           <div className='w-full bg-white rounded-lg'>
-            <div className='text-center text-xl p-2 bg-result-title text-white result-text rounded-t-lg'>Result</div>
-            <div className='text-center py-4 border-b'>
-              <p className='text-4xl text-[#527a1e] font-bold'>{testInfo.wpm ? testInfo.wpm.toFixed(0) : 0} WPM</p>
-              <span>(words per minute)</span>
+            <div className='text-center text-xl p-2 bg-result-title text-white result-text rounded-t-lg'>成绩 </div>
+            <div className='text-center py-4 border-b bg-[#f9f9f9]'>
+              <p className='text-4xl text-[#527a1e] font-bold'>{testInfo.wpm ? testInfo.wpm.toFixed(0) : 0} 单词/分钟</p>
+              <span>每分钟字数</span>
             </div>
-            <div className='p-4 flex justify-between text-xl border-b '>
-              <p className=''>Keystrokes</p>
+            <div className='px-4 py-2 flex justify-between text-[16px] border-b '>
+              <p className=''>键盘敲击</p>
               <span>{testInfo.keystrokes || 0}</span>
             </div>
-            <div className='p-4 flex justify-between text-xl border-b '>
+            <div className='px-4 py-2 flex justify-between text-[16px] border-b bg-[#f9f9f9]'>
               <p className=''>Accuracy</p>
               <strong>{testInfo.accuracy || 0}%</strong>
             </div>
-            <div className='p-4 flex justify-between text-xl border-b '>
-              <p className=''>Correct words</p>
+            <div className='px-4 py-2 flex justify-between text-[16px] border-b '>
+              <p className=''>正确的单词</p>
               <strong className='text-emerald-600'>{testInfo.correct || 0}</strong>
             </div>
-            <div className='p-4 flex justify-between text-xl border-b '>
-              <p className=''>Wrong words</p>
+            <div className='px-4 py-2 flex justify-between text-[16px] border-b bg-[#f9f9f9]'>
+              <p className=''>错误的单词</p>
               <strong className='text-rose-700'>{testInfo.incorrect || 0}</strong>
+            </div>
+            <div className='flex flex-col justify-center relative'>
+              <div className='cursor-pointer px-4 pt-4 pb-2'>
+                <img src={btn1} alt="btn-1" />
+              </div>
+              <div className='cursor-pointer px-4 pb-4'>
+              <img src={btn2} alt="btn-1" />
+              </div>
             </div>
           </div>
         </div>}
-        <Table />
+        <div className='flex relative'>
+          <img src={tablepng} alt="tabble" className='flex' />
+        </div>
+          {/* <Table /> */}
 
         </div>
         <div className='col-span-1'></div>
