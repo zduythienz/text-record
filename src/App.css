@@ -38,24 +38,48 @@
 }
 .highlight{
   background: #c6c2c2;
-  color: #000;
+  color: #111111;
   border-radius: 3px;
 }
 
 .highlight-wrong{
-  background: #d24150;
+  background: red;
 }
 
 .wrong {
-  color: #d24150
+  color: red
 }
 
 .correct {
-  color: #24cca7
+  color: green
 }
 
 .countdown{
   width: 75px
+}
+
+.countdown-2{
+  width: 60px;
+  color: #fff;
+  background-color: #428bca;
+  border-color: #357ebd;
+  text-align: center;
+  padding: 6px 4px;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.428571429;
+}
+
+.countdown-3{
+  width: 180px;
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+  text-align: center;
+  padding: 6px 4px;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.428571429;
 }
 
 

@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import {Main} from './templates/Main'
 import {useState, useEffect} from 'react'
-import {ChevronRightIcon, ChevronDoubleRightIcon, RefreshIcon, CogIcon, UsersIcon, DocumentTextIcon, ChartBarIcon, UploadIcon } from '@heroicons/react/outline'
+import {ChevronRightIcon, ChevronDoubleRightIcon, RefreshIcon, CogIcon, UsersIcon, DocumentTextIcon, ChartBarIcon, UploadIcon, ChevronDownIcon } from '@heroicons/react/outline'
 import Table from './components/Table'
 import './App.css';
 
@@ -313,8 +313,47 @@ function App() {
               </div>
             </div>
           </div>
+          <div className='flex flex-col bg-white rounded-lg mt-4'>
+            <div className={`flex flex-row p-2 border-b items-start gap-4 rounded-t-lg cursor-pointer`}>
+              <img src="https://graph.facebook.com/115700377854960/picture?type=square" alt="" class="pull-left rounded-lg" />
+              <div>
+                <p className='text-xs'> <span className='text-[#428bca]'>BalaBlack</span>  reached <strong>24 WPM </strong>in the <span className='text-[#428bca]'>Normal Typing Test (vietnamese)</span> </p>
+              </div>
+            </div>
+            <div className={`flex flex-row p-2 border-b items-start gap-4 rounded-t-lg cursor-pointer`}>
+              <img src="https://graph.facebook.com/10216685035873013/picture?type=square" alt="" class="pull-left rounded-lg" />
+              <div>
+                <p className='text-xs'> <span className='text-[#428bca]'>MuhammadRusdianLaOla</span>  reached <strong>92 WPM </strong>in the <span className='text-[#428bca]'>Normal Typing Test (indonesian)</span> </p>
+              </div>
+            </div>
+            <div className={`flex flex-row p-2 border-b items-start gap-4 rounded-t-lg cursor-pointer`}>
+              <img src="https://graph.facebook.com/630224231857086/picture?type=square" alt="" class="pull-left rounded-lg" />
+              <div>
+                <p className='text-xs'> <span className='text-[#428bca]'>Qunh9</span>  reached <strong>95 WPM </strong>in the <span className='text-[#428bca]'>Normal Typing Test (vietnamese)</span> </p>
+              </div>
+            </div>
+            <div className={`flex flex-row p-2 border-b items-start gap-4 rounded-t-lg cursor-pointer`}>
+              <img src="https://www.gravatar.com/avatar/36278f43b411da88ca27811086cd0d2d?s=50&d=mm&r=pg" alt="" class="pull-left rounded-lg" />
+              <div>
+                <p className='text-xs'> <span className='text-[#428bca]'>theowong</span>  reached <strong>36 WPM </strong>in the <span className='text-[#428bca]'>Normal Typing Test (indonesian)</span> </p>
+              </div>
+            </div>
+            <div className={`flex flex-row p-2 border-b items-start gap-4 rounded-t-lg cursor-pointer`}>
+              <img src="https://graph.facebook.com/630224231857086/picture?type=square" alt="" class="pull-left rounded-lg" />
+              <div>
+                <p className='text-xs'> <span className='text-[#428bca]'>BalaBlack</span>  reached <strong>24 WPM </strong>in the <span className='text-[#428bca]'>Normal Typing Test (vietnamese)</span> </p>
+              </div>
+            </div>
+            
+          </div>
         </div>
         <div className='flex flex-col justify-start  col-span-9'>
+          <div className='flex gap-2 items-center mb-2'>
+            <div className='rounded-md text-white text-md countdown-2'>登录</div>
+            <div className='rounded-md text-white text-md countdown-3 flex gap-2 justify-center'>Chinese Simplified <ChevronDownIcon width={14}/></div>
+            <div className='text-[14px]'>切换打字测试语言</div>
+
+          </div>
           <div className='relative gap-2 bg-slate-200 text-6xl overflow-hidden wrap-display-text'>
             <div className='absolute' style={{top: rowShow * -55}}>
               {lstWords.map( (item) => {
@@ -325,8 +364,8 @@ function App() {
           </div>
           <div className='flex justify-center items-center gap-4 mb-12 bg-[#A7C8E7] rounded'>
             <input className="input-text w-52" type="text" readOnly={endGame} value={inputValue} onChange={onChangeInput} onKeyUp={onKeyDown} autoComplete="off" />
-            <div className='p-3 rounded-md text-white text-2xl bg-slate-500 countdown'>0:{counter < 10 ? `0${counter}` : counter}</div>
-            <div className='p-3 rounded-md text-white text-2xl bg-slate-500 refresh cursor-pointer' onClick={refresh}>
+            <div className='p-3 rounded-md text-white text-2xl bg-[#3c4d5c] countdown'>{counter === 60 ? '1:00' : `0:${counter < 10 ? `0${counter}` : counter}`} </div>
+            <div className='p-3 rounded-md text-white text-2xl bg-[#428bca] refresh cursor-pointer' onClick={refresh}>
               <RefreshIcon width={32} height={32}/>
             </div>
 
@@ -364,6 +403,7 @@ function App() {
       </div>
       
       </div>
+      
     </Main>
   );
 }

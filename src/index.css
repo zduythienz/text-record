@@ -16,6 +16,10 @@ code {
 .bg-body-wrap{
   background-color: rgba(162,208,247, 0.9);
 }
+
+.ul-bottom li {
+  padding: 8px
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
